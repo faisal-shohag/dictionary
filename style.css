@@ -1,0 +1,172 @@
+
+body{
+    background-color: #F6F6F6;
+}
+
+#app{
+    padding-left: 10px;
+    padding-right: 10px;
+    
+}
+
+.top_title{
+    font-size: 30px;
+    /* margin-top: 10px; */
+    /* padding: 10px; */
+    font-family: 'Abril Fatface', cursive;
+}
+
+.search input{
+    color: #222;
+    font-family: Lato;
+    padding-left: 5px !important;
+    margin: 0;
+    border: 0;
+    background-color: #eeee !important;
+    border-bottom: 0 !important;
+    /* border: 2px solid black !important; */
+    border-radius: 5px !important;
+    
+}
+
+
+.input-field>label{
+  left: 2% !important;
+  pointer-events: none;
+}
+
+.word_head{
+    font-size: 40px;
+    font-family: 'Abril Fatface', cursive;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    position: relative;
+}
+
+.add_fav{
+position: absolute;
+right: 10%;
+color: rgb(141, 139, 139);
+cursor: pointer;
+}
+
+.word_prnc{
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 16px;
+    padding-left: 10px;
+    
+}
+
+.word_head .speaker{
+    font-size: 20px;
+    color: blue;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    box-shadow: 0 1px 5px rgba(0,0,0,.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(216, 213, 213);
+}
+
+.def_body{
+  margin-top: 10px;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 5px;
+  background: #ffff;
+}
+
+.org{
+    font-family: 'IM Fell DW Pica', serif;
+}
+
+.pos{
+    font-style: italic;
+    font-size: 16px;
+    color: blueviolet;
+}
+
+.def{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.ex{
+    font-size: 15px;
+    color: rgb(122, 115, 115);
+}
+
+.syn{
+    font-size: 16px;
+}
+
+.dic_text{
+    font-size: 16px;
+    color: darkcyan;
+    font-weight: bold;
+}
+
+.bn_img{
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+.dic_header{
+    font-size: 20px;
+    font-family: 'Abril Fatface', cursive;
+    margin-bottom: 10px;
+    font-weight: 900;
+    color: rgb(121, 117, 117);
+}
+
+.word_list{
+    /* padding: 5px; */
+}
+.word{
+ font-size: 17px;
+ font-family: 'Abril Fatface', cursive;
+ color: rgb(7, 5, 5);
+ padding-left: 10px;
+}
+
+.img{
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+    padding: 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+ /* label focus color */
+ .input-field input[type=text]:focus + label {
+    color: #000;
+}
+/* label underline focus color */
+  .input-field input[type=text]:focus {
+    border-bottom: 1px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+  }
+
+  .input-field input:focus + label {
+    color: red !important;
+  }
+  /* label underline focus color */
+.input-field input:focus {
+    border: 0px solid grey !important;
+    box-shadow: 0 0px 0 0 red !important
+  }
+
+  .input-field i{
+      color: rgb(165, 161, 161);
+  }
+  .active{
+      color: #000 !important;
+  }
+
+  .top_title_screen{
+      font-family: Lato;
+      font-size: 30px;
+  }
