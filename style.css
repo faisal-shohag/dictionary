@@ -47,8 +47,10 @@ body{
 .add_fav{
 position: absolute;
 right: 3%;
-color: rgb(141, 139, 139);
+color: #8d8b8b;
 cursor: pointer;
+bottom: -35%;
+font-size: 30px;
 }
 
 .word_prnc{
@@ -122,14 +124,30 @@ cursor: pointer;
     color: rgb(121, 117, 117);
 }
 
+
+.history{
+display: flex;
+width: 100%;
+overflow-y: hidden;
+gap: 5px;
+overflow-x: scroll;
+}
 .word_list{
-    /* padding: 5px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .word{
  font-size: 17px;
  font-family: 'Abril Fatface', cursive;
  color: rgb(7, 5, 5);
- padding-left: 10px;
+ padding-top: 0;
+ padding-bottom: 0;
+ padding-left: 5px;
+ padding-right: 5px;
+ background: #fff;
+ border-radius: 5px;
+ box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 .img{
@@ -170,3 +188,86 @@ cursor: pointer;
       font-family: Lato;
       font-size: 30px;
   }
+
+  .menu_item{
+      background: #fff;
+      padding: 5px;
+      border-radius: 5px;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+      margin-top: 10px;
+  }
+
+  .menu_item a{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      position: relative;
+      
+  }
+  
+  .menu_logo{
+     padding: 5px;
+     font-size: 23px;
+     color: #d81e1e;
+     background: #d81e1e57;
+     border-radius: 3px;
+     
+  }
+
+  .menu_title{
+    font-family: Lato;
+    color: crimson;
+    font-weight: 900;
+  }
+
+  .action_icon{
+      position: absolute;
+      color: crimson;
+      right: 2%;
+  }
+
+  #pagination{
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+  }
+
+  .paginationjs .paginationjs-pages li>a {
+    min-width: 30px;
+    height: 28px;
+    /* line-height: 28px; */
+    display: flex !important;
+    background: #fff;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+  .paginationjs .paginationjs-pages li {
+    float: left;
+    border: 0px solid rgb(177, 29, 29) !important;
+    border-right: none;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.paginationjs .paginationjs-pages li.active>a {
+    height: 30px;
+    line-height: 30px;
+    background: crimson !important;
+    color: #fff;
+}
+
+.paginationjs .paginationjs-pages li.active {
+    border: 0 !important;
+}
+
+.paginationjs{
+    font-family: Lato !important;
+}
