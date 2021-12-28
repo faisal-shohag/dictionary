@@ -20,6 +20,7 @@ router.on(function(){
         history.innerHTML="";
         words = s.val().words;
         for(let i=0; i<words.length; i++){
+           
             history.innerHTML += `
                 <div class="word_list">
                 <a href="#!/search/${words[i]}"><div class="word">${words[i]}</div></a>
@@ -29,9 +30,10 @@ router.on(function(){
         document.getElementById('search').addEventListener('keyup', function(event){
             if(event.key === 'Enter'){
                 event.preventDefault();
-                let s_word = (this.value).toLowerCase();
 
-                router.navigate('/search/'+s_word);
+                let s_word = (this.value).toLowerCase();
+                let allw = words.join(', ');
+                if(!allw.includes(s_word)){
                 if(words.length===10){
                     words.pop();
                     words.unshift(s_word);
@@ -39,6 +41,8 @@ router.on(function(){
                     words.push(s_word)
                 }
                 db.ref('app/dic/search_history/').update({words: words});
+            }
+                router.navigate('/search/'+s_word);
                 // console.log(words);
             }
     });
@@ -68,13 +72,22 @@ router.on({
           $.get('https://api.dictionaryapi.dev/api/v2/entries/en/'+s_word, function(){})
           .done(function(res){
           console.log(res);
-          let audio = new Audio(res[0].phonetics[0].audio);
+         
               dic_body.innerHTML = `
               <div class="word_head"> <div class="speaker"><i class="icofont-audio"></i> </div> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
               <div class="word_prnc">/${res[0].phonetic}/</div>
               <div class="word_def"></div>
               <div class="origin"></div>
               `
+
+              let audio;
+              if(res[0].phonetics.length !== 0){
+               audio = new Audio(res[0].phonetics[0].audio);
+               
+              }else {
+                $('.speaker').hide();
+                $('.word_prnc').hide();
+              }
 
               $('.speaker').click(function(e){
                   e.preventDefault();
@@ -149,7 +162,7 @@ router.on({
                   }
                 });
                 
-             console.log(found);
+            //  console.log(found);
 
                 $('.add_fav').click(function(e){
                     e.preventDefault();
