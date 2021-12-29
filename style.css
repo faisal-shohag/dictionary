@@ -225,6 +225,7 @@ padding: 10px;
     margin-top: 10px;
     display: flex;
     flex-direction: column;
+    font-family: Lato;
   }
 
   .menu_item_no_action .menu_title{
@@ -237,7 +238,7 @@ padding: 10px;
 
   .dic_time{
       font-size: 11px;
-      color: blue;
+      color: #222;
       /* font-weight: bold; */
   }
 
