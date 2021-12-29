@@ -165,9 +165,11 @@ router.on({
                     
               }
              if(res[0].origin !== undefined){ 
+                 let v = (res[0].origin). replace(/'/g,'');
+                 console.log(v);
               $('.origin').html(`
               <div class="def_body">
-              <div class="org"><b>ORIGIN:</b> ${res[0].origin} <div onclick="responsiveVoice.speak('${res[0].origin}')" class="speaker"><i class="icofont-audio"></i></div>
+              <div class="org"><b>ORIGIN:</b> ${res[0].origin} <div onclick="responsiveVoice.speak('${v}')" class="speaker"><i class="icofont-audio"></i></div>
               </div>
               `);}
 
