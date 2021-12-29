@@ -179,49 +179,28 @@ router.on({
               <div class="dic_header">Bangla Academy Dictionary</div>
               <div class="img"><img onError="this.onerror=null;this.src='https://cdn.dribbble.com/users/88213/screenshots/8560585/media/7263b7aaa8077a322b0f12a7cd7c7404.png?compress=1&resize=200x200';" src="https://www.english-bangla.com/public/images/words/D${s_word[0]}/${s_word}"/></div>`);
              
-             
+              var URL = 'https://www.english-bangla.com/public/images/words/D'+s_word[0]+'/'+s_word;
+              function testImage(URL) {
+                var tester=new Image();
+                tester.onload=imageFound;
+                tester.onerror=imageNotFound;
+                tester.src=URL;
+            }
+            function imageFound() {
+                console.log('That image is found and loaded');
+            }
+            function imageNotFound() {
+                console.log('That image was not found.');
+            }
+            testImage(URL);
 
+    
             AddFav(s_word);
               
 
             }).fail(e=>{
               $('.bn_img').html(``);
-              $(function(){
-                  $.get('https://api.codetabs.com/v1/proxy?quest=https://www.english-bangla.com/dictionary/'+params.id, ()=>{})
-                  .done(res=>{
-                      let ht = res.split('\n');
-                      ht = ht[7].split('|');
-                      ht = ht[0].split('"');
-                     // console.log(ht[3]);
-                    //  let meaning = ht[3].split(';');
-                      if(ht[3].includes('Providing the maximum meaning of a word by combining the best sources with us.')){
-                          console.log('Not Found');
-                            Swal.fire({
-                                icon: 'error',
-                                title: e.responseJSON.title,
-                                html: e.responseJSON.resolution,
-                                showConfirmButton: true,
-                                timer: 5000
-                             }).then(r=>{
-                                    router.navigate('/');
-                                });
-              //console.log(e.responseJSON);
-                      }else{
-                          $('#prg').hide();
-                          app.innerHTML = `
-                          <div class="animate__animated animate__fadeInUp body">
-                          <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">Search</span></div>
-                          <div class="word_head"> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
-                            <div style="margin-top: 30px;" class="def_body">
-                            <div class="def">${ht[3]}</div>
-                            </div></div>
-                          `
-
-                          AddFav(params.id);
-                      }
-                  })
-              })
-            
+              bnAc(s_word);
             });
         });
     },
@@ -377,3 +356,47 @@ $('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
 $('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
 
   }
+
+
+  function bnAc(s_word){
+    $(function(){
+        $.get('https://api.codetabs.com/v1/proxy?quest=https://www.english-bangla.com/dictionary/'+s_word, ()=>{})
+        .done(res=>{
+            let ht = res.split('\n');
+            ht = ht[7].split('|');
+            ht = ht[0].split('"');
+           // console.log(ht[3]);
+          //  let meaning = ht[3].split(';');
+            if(ht[3].includes('Providing the maximum meaning of a word by combining the best sources with us.')){
+                //console.log('Not Found');
+                  Swal.fire({
+                      icon: 'error',
+                      title: e.responseJSON.title,
+                      html: e.responseJSON.resolution,
+                      showConfirmButton: true,
+                      timer: 5000
+                   }).then(r=>{
+                          router.navigate('/');
+                      });
+    //console.log(e.responseJSON);
+            }else{
+                $('#prg').hide();
+                app.innerHTML = `
+                <div class="animate__animated animate__fadeInUp body">
+                <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">Search</span></div>
+                <div class="word_head"> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
+                  <div style="margin-top: 30px;" class="def_body">
+                  <div class="def">${ht[3]}</div>
+                  </div></div>
+                `
+
+                AddFav(s_word);
+            }
+        })
+    });
+  
+  }
+
+  var audio = new Audio();
+audio.src ='http://translate.google.com/translate_tts?ie=utf-8&tl=en&q=Hello%20World.';
+audio.play();
