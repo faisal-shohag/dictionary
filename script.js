@@ -4,7 +4,7 @@ var app = document.querySelector('#app');
 
 router.on(function(){
     app.innerHTML= `
-    <div class="animate__animated animate__fadeIn animate_faster body">
+    <div class="animate__animated animate__fadeIn body">
     <div class="top_title">Dictionary</div>
     <center id="prg">
     <div class="progress grey">
@@ -69,7 +69,7 @@ router.on({
     "search/:id": function(params){
         
         app.innerHTML= `
-        <div class="animate__animated animate__fadeInUp animate_faster body">
+        <div class="animate__animated animate__fadeInUp body">
     <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">Searching...</span></div>
     <div class="dic_body">
     <center id="prg">
@@ -208,7 +208,7 @@ router.on({
                       }else{
                           $('#prg').hide();
                           app.innerHTML = `
-                          <div class="animate__animated animate__fadeInUp animate_faster body">
+                          <div class="animate__animated animate__fadeInUp body">
                           <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">Search</span></div>
                           <div class="word_head"> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
                             <div style="margin-top: 30px;" class="def_body">
@@ -227,7 +227,7 @@ router.on({
 
     "favorites": function(){
         app.innerHTML = `
-        <div class="animate__animated animate__fadeIn animate_faster body">
+        <div class="animate__animated animate__fadeIn body">
         <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">Favorites...</span></div>
         <center id="prg">
         <div class="progress grey">
