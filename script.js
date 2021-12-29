@@ -15,7 +15,7 @@ router.on(function(){
     <i class="icofont-search-1 prefix"></i>
     <input id="search" name="search" type="text" placeholder="Search word" />
 
-    <div class="dic_header">Recent Search <a href="#!/history"><div style="display:none;" class="dic_head_sub">See all</div></a></div>
+    <div class="dic_header">Recent Searches <a href="#!/history"><div style="display:none;" class="dic_head_sub">See all</div></a></div>
     <div class="history"></div>
     </div>
 
@@ -240,13 +240,15 @@ router.on({
         `
 
         db.ref('app/dic/favs').on('value', f=>{
-            $('#tt').text('Favorites');
+            
             $('#prg').hide();
             let data=[];
             let html= [];
             f.forEach(item=>{
               data.push({word: item.val().word, date: item.val().date, key: item.key});
             });
+
+            $('#tt').text('Favorites('+data.length+')');
 
             data.sort((a, b) => {
                 return new Date(b.date) - new Date(a.date);
