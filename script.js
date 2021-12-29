@@ -109,8 +109,12 @@ router.on({
               let word_def = document.querySelector('.word_def');
               let meanings = res[0].meanings;
               for(let i=0; i<meanings.length; i++){
-                      let syn = (res[0].meanings[i].definitions[0].synonyms).join(", ");
-                      let ant = (res[0].meanings[i].definitions[0].antonyms).join(", ");
+                      let syn = (res[0].meanings[i].definitions[0].synonyms).map(e=> "<a href='#!/search/"+ e + "'>"+e).join("</a>, ");
+                      syn += "</a>"
+                    //   console.log(syn);
+                      let ant = (res[0].meanings[i].definitions[0].antonyms).map(e=> "<a href='#!/search/"+ e + "'>"+e).join("</a>, ");
+                      ant += "</a>"
+                      
 
                       if(res[0].meanings[i].definitions[0].synonyms.length === 0 && res[0].meanings[i].definitions[0].antonyms.length !== 0){
                         word_def.innerHTML += `
