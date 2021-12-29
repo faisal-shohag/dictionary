@@ -87,8 +87,10 @@ font-size: 30px;
 }
 
 .pos{
-    font-style: italic;
-    font-size: 16px;
+    /* font-style: italic; */
+    font-family: Lato;
+    font-weight: bold;
+    font-size: 18px;
     color: blueviolet;
 }
 
@@ -119,11 +121,23 @@ font-size: 30px;
 
 .dic_header{
     font-size: 20px;
-    font-family: 'Abril Fatface', cursive;
+    /* font-family: 'Abril Fatface', cursive; */
+    font-family: Lato;
     margin-bottom: 10px;
     font-weight: 900;
     color: rgb(121, 117, 117);
+    display: flex;
+    justify-content: space-between;
 }
+
+.dic_head_sub{
+    font-family: Lato;
+    font-size: 17px;
+    color: blue;
+    text-decoration: underline;
+}
+
+
 
 
 .history{
@@ -132,15 +146,26 @@ width: 100%;
 overflow-y: hidden;
 gap: 5px;
 overflow-x: scroll;
+padding: 10px;
 }
+
 .word_list{
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.syn a{
+    color: blue;
+    text-decoration: underline;
+    
+}
+
 .word{
  font-size: 17px;
- font-family: 'Abril Fatface', cursive;
+ /* font-family: 'Abril Fatface', cursive; */
+ font-family: Lato;
+ font-weight: bold;
  color: rgb(7, 5, 5);
  padding-top: 0;
  padding-bottom: 0;
@@ -149,6 +174,8 @@ overflow-x: scroll;
  background: #fff;
  border-radius: 5px;
  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+ min-width: 60px;
+ text-align: center;
 }
 
 .img{
@@ -190,6 +217,36 @@ overflow-x: scroll;
       font-size: 30px;
   }
 
+  .menu_item_no_action{
+    background: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu_item_no_action .menu_title{
+      font-size: 18px;
+  }
+  .dic_row{
+      display: flex;
+      justify-content: space-between;
+  }
+
+  .dic_time{
+      font-size: 11px;
+      color: blue;
+      /* font-weight: bold; */
+  }
+
+  .dic_date{
+      font-size: 12px;
+      color: rgba(99, 93, 93, 0.933);
+  }
+   
+  
   .menu_item{
       background: #fff;
       padding: 5px;

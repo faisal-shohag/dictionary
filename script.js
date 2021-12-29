@@ -14,7 +14,7 @@ router.on(function(){
     <i class="icofont-search-1 prefix"></i>
     <input id="search" name="search" type="text" placeholder="Search word" />
 
-    <div class="dic_header">Recent Search</div>
+    <div class="dic_header">Recent Search <a href="#!/history"><div class="dic_head_sub">See all</div></a></div>
     <div class="history"></div>
     </div>
 
@@ -82,7 +82,7 @@ router.on({
         $(function(){
           $.get('https://api.dictionaryapi.dev/api/v2/entries/en/'+s_word, function(){})
           .done(function(res){
-        //   console.log(res);
+          console.log(res);
          $('#tt').text('Search');
               dic_body.innerHTML = `
               <div class="word_head"> <div class="speaker"><i class="icofont-audio"></i> </div> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
@@ -93,7 +93,7 @@ router.on({
               $('.add_fav').hide();
 
               let audio;
-              if(res[0].phonetics.length !== 0){
+              if(res[0].phonetic !== undefined){
                audio = new Audio(res[0].phonetics[0].audio);
                
               }else {
@@ -111,15 +111,17 @@ router.on({
               for(let i=0; i<meanings.length; i++){
                       let syn = (res[0].meanings[i].definitions[0].synonyms).map(e=> "<a href='#!/search/"+ e + "'>"+e).join("</a>, ");
                       syn += "</a>"
-                    //   console.log(syn);
                       let ant = (res[0].meanings[i].definitions[0].antonyms).map(e=> "<a href='#!/search/"+ e + "'>"+e).join("</a>, ");
                       ant += "</a>"
                       
+                      let pos = res[0].meanings[i].partOfSpeech;
+                      let p = pos.substring(1, pos.length);
+                      pos = pos[0].toUpperCase() + p;
 
                       if(res[0].meanings[i].definitions[0].synonyms.length === 0 && res[0].meanings[i].definitions[0].antonyms.length !== 0){
                         word_def.innerHTML += `
                         <div class="def_body">
-                        <div class="pos">${res[0].meanings[i].partOfSpeech}</div>
+                        <div class="pos">${pos}</div>
                         <div class="def">${res[0].meanings[i].definitions[0].definition}</div>
                         <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                         <div class="syn" id="ant"><span class="dic_text">Antonyms: </span>${ant}</div>
@@ -129,7 +131,7 @@ router.on({
                       }else if(res[0].meanings[i].definitions[0].antonyms.length === 0 && res[0].meanings[i].definitions[0].synonyms.length !== 0){
                         word_def.innerHTML += `
                     <div class="def_body">
-                    <div class="pos">${res[0].meanings[i].partOfSpeech}</div>
+                    <div class="pos">${pos}</div>
                     <div class="def">${res[0].meanings[i].definitions[0].definition}</div>
                     <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                     <div class="syn" id="syn"><span class="dic_text">Synonyms: </span>${syn}</div>
@@ -138,7 +140,7 @@ router.on({
                     }else if(res[0].meanings[i].definitions[0].antonyms.length === 0 && res[0].meanings[i].definitions[0].synonyms.length === 0){
                         word_def.innerHTML += `
                     <div class="def_body">
-                    <div class="pos">${res[0].meanings[i].partOfSpeech}</div>
+                    <div class="pos">${pos}</div>
                     <div class="def">${res[0].meanings[i].definitions[0].definition}</div>
                     <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                     </div>
@@ -244,13 +246,14 @@ router.on({
             });
             // console.log(data);
             data.forEach(item=>{
-                let readyData = `<div class="menu_item"><a href="#!/search/${item.word}"><div class="menu_title">${item.word}</div> <div id="${item.key}" class="action_icon" style="display: none;"><i class="icofont-close"></i></div></a></div>` 
+                let readyData = `<a href="#!/search/${item.word}"><div class="menu_item_no_action"> <div class="dic_row"><div class="menu_title">${item.word}</div> <div class="dic_time">${getRelativeTime(item.date)}</div></div><div class="dic_date">${DateSet(item.date)}</div></div></a>` 
                 html.push(readyData);
             });
             // console.log(html);
             
             $('#pagination').pagination({
                 dataSource: html,
+                pageSize: 15,
                 callback: function(data, pagination) {
                     $('#fav_list').html(data);
                     
@@ -303,4 +306,18 @@ function AddFav(s_word){
           
       });
     });
+  }
+
+  function DateSet(date){
+      let d = date;
+      d = d.split(' ');
+      d = d[2] + ' ' + d[1] + ' ' + d[3] + ' at ' + d[4];
+      return d;
+  }
+
+//   DateSet()
+
+  function getRelativeTime(date) {
+    const d = new Date(date);
+    return moment(d).fromNow();
   }
