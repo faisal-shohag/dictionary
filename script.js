@@ -90,7 +90,7 @@ router.on({
           console.log(res);
          $('#tt').text('Search');
               dic_body.innerHTML = `
-              <div class="word_head"> <div id="word_speak"  class="speaker"><i class="icofont-audio"></i> </div> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
+              <div class="word_head"> <span id="not_found"><div id="word_speak"  class="speaker"><i class="icofont-audio"></i> </div></span> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
               <div class="word_prnc">/${res[0].phonetic}/</div>
               <div class="word_def"></div>
               <div class="origin"></div>
@@ -100,16 +100,19 @@ router.on({
               let audio;
               if(res[0].phonetic !== undefined){
                audio = new Audio(res[0].phonetics[0].audio);
+
+               $('#word_speak').click(function(e){
+                e.preventDefault();
+                audio.play();
+            })
                
               }else {
                 $('#word_speak').hide();
                 $('.word_prnc').hide();
+                $('#not_found').html(`<div id="word_speak" onclick="responsiveVoice.speak('${s_word}')"  class="speaker"><i class="icofont-audio"></i> </div>`)
               }
 
-              $('#word_speak').click(function(e){
-                  e.preventDefault();
-                  audio.play();
-              })
+             ;
               
               let word_def = document.querySelector('.word_def');
               let meanings = res[0].meanings;
@@ -282,11 +285,13 @@ function AddFav(s_word){
                 date: (new Date()).toString()
             });
             M.toast({html: 'Added to favorite', classes: 'green'});
+            responsiveVoice.speak('Added to favorite!');
             AddFav(s_word);
             return;
            }else{
                db.ref('app/dic/favs/'+keyFound).remove();
               M.toast({html: 'Removed from favorite', classes: 'red'});
+              responsiveVoice.speak('Removed from favorite');
               $('.add_fav').css("color", "#8d8b8b");
 
           AddFav(s_word);
