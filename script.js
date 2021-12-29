@@ -90,7 +90,7 @@ router.on({
           console.log(res);
          $('#tt').text('Search');
               dic_body.innerHTML = `
-              <div class="word_head"> <div id="word_speak" class="speaker"><i class="icofont-audio"></i> </div> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
+              <div class="word_head"> <div id="word_speak" onclick="responsiveVoice.speak('${s_word}')" class="speaker"><i class="icofont-audio"></i> </div> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
               <div class="word_prnc">/${res[0].phonetic}/</div>
               <div class="word_def"></div>
               <div class="origin"></div>
@@ -106,10 +106,10 @@ router.on({
                 $('.word_prnc').hide();
               }
 
-              $('#word_speak').click(function(e){
-                  e.preventDefault();
-                  audio.play();
-              })
+            //   $('#word_speak').click(function(e){
+            //       e.preventDefault();
+            //       audio.play();
+            //   })
               
               let word_def = document.querySelector('.word_def');
               let meanings = res[0].meanings;
