@@ -29,6 +29,25 @@ body{
     
 }
 
+.search{
+  position: relative;
+}
+
+.histories{
+    background: #fff;
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    z-index: 99;
+    top: 60%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-radius: 5px;
+ overflow-y: scroll;
+ overflow-x: hidden;
+    /* bottom: 10px; */
+    display: none;
+}
+
 
 .input-field>label{
   left: 2% !important;
@@ -330,3 +349,19 @@ padding: 10px;
 .paginationjs{
     font-family: Lato !important;
 }
+
+.option_menu{
+    display: flex;
+    gap: 15px;
+    font-family: Lato;
+    margin-top: 5px;
+}
+
+.option_item{
+    background: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    cursor: pointer;
+}
+

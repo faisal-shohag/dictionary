@@ -15,8 +15,9 @@ router.on(function(){
     <i class="icofont-search-1 prefix"></i>
     <input id="search" name="search" type="text" placeholder="Search word" />
 
-    <div class="dic_header">Recent Searches <a href="#!/history"><div style="display:none;" class="dic_head_sub">See all</div></a></div>
+    <div class="dic_header">Recent Searches <a href="#!/history"><div style="display: none;"  class="dic_head_sub">See all</div></a></div>
     <div class="history"></div>
+    <div class="histories"></div>
     </div>
 
     <div class="menu_item">
@@ -229,6 +230,10 @@ router.on({
         app.innerHTML = `
         <div class="animate__animated animate__fadeIn body">
         <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">Favorites...</span></div>
+        <div class="option_menu">
+        <div id="sbl" class="option_item"><i class="icofont-font"></i> Sort by Letter</div>
+        <div id="sbt" class="option_item"><i class="icofont-calendar"></i> Sort by Time</div>
+        </div>
         <center id="prg">
         <div class="progress grey">
         <div class="indeterminate red"></div>
@@ -238,43 +243,37 @@ router.on({
         <div id="pagination"></div>
         </div>
         `
-
-        db.ref('app/dic/favs').on('value', f=>{
-            
+        db.ref('app/dic/favs').once('value', f=>{
             $('#prg').hide();
             let data=[];
-            let html= [];
             f.forEach(item=>{
               data.push({word: item.val().word, date: item.val().date, key: item.key});
             });
-
             $('#tt').text('Favorites('+data.length+')');
-
-            data.sort((a, b) => {
-                return new Date(b.date) - new Date(a.date);
-            });
-            // console.log(data);
-            data.forEach(item=>{
-                let readyData = `<a href="#!/search/${item.word}"><div class="menu_item_no_action"> <div class="dic_row"><div class="menu_title">${item.word}</div> <div class="dic_time">${getRelativeTime(item.date)}</div></div><div class="dic_date">${DateSet(item.date)}</div></div></a>` 
-                html.push(readyData);
-            });
-            // console.log(html);
+            sortByTime(data);
             
-            $('#pagination').pagination({
-                dataSource: html,
-                pageSize: 15,
-                callback: function(data, pagination) {
-                    $('#fav_list').html(data);
-                    
-                }
+            $('.option_item').click(function(e){
+                e.preventDefault();
+               let id = $(this)[0].id;
+               if(id==="sbt") sortByTime(data);
+               if(id==="sbl") sortByLetter(data);
             });
-            $('.paginationjs-prev').html(`<a><i class="icofont-double-left"></i></a>`);
-$('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
-
-        });
-        
+            
+        });   
     },
 
+    "history":function(){
+        $('.histories').show();
+        $('.dic_head_sub').html(`<span class="red-text"><i class="icofont-close"></i></span>`);
+        $('.dic_head_sub').addClass('animate_animated animate__bounceIn');
+        $('.histories').addClass("animate__animated animate__fadeInUp");
+        $('.dic_head_sub').click(function() {
+             console.log('back!');
+             $('.histories').addClass("animate__animated animate__fadeOutDown");
+             $('.dic_head_sub').html(`See All`);
+             $('.dic_head_sub').addClass('animate_animated animate__fadeInRight');
+           });
+    }
 }).resolve();
 
 
@@ -302,14 +301,14 @@ function AddFav(s_word){
                 date: (new Date()).toString()
             });
             M.toast({html: 'Added to favorite', classes: 'green'});
-            AddFav();
+            AddFav(s_word);
             return;
            }else{
                db.ref('app/dic/favs/'+keyFound).remove();
               M.toast({html: 'Removed from favorite', classes: 'red'});
               $('.add_fav').css("color", "#8d8b8b");
 
-          AddFav();
+          AddFav(s_word);
           return;
            }
           
@@ -329,4 +328,52 @@ function AddFav(s_word){
   function getRelativeTime(date) {
     const d = new Date(date);
     return moment(d).fromNow();
+  }
+
+  function sortByTime(data){
+    let html= [];
+    data.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+    });
+
+    data.forEach(item=>{
+        let readyData = `<a href="#!/search/${item.word}"><div class="menu_item_no_action"> <div class="dic_row"><div class="menu_title">${item.word}</div> <div class="dic_time">${getRelativeTime(item.date)}</div></div><div class="dic_date">${DateSet(item.date)}</div></div></a>` 
+        html.push(readyData);
+    });
+
+    $('#pagination').pagination({
+        dataSource: html,
+        pageSize: 15,
+        callback: function(data, pagination) {
+            $('#fav_list').html(data);
+            
+        }
+    });
+    $('.paginationjs-prev').html(`<a><i class="icofont-double-left"></i></a>`);
+$('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
+
+  }
+
+  function sortByLetter(data){
+    let html= [];
+    data.sort((a, b) => {
+        return a.word.toUpperCase().localeCompare(b.word.toUpperCase());
+    });
+
+    data.forEach(item=>{
+        let readyData = `<a href="#!/search/${item.word}"><div class="menu_item_no_action"> <div class="dic_row"><div class="menu_title">${item.word}</div> <div class="dic_time">${getRelativeTime(item.date)}</div></div><div class="dic_date">${DateSet(item.date)}</div></div></a>` 
+        html.push(readyData);
+    });
+
+    $('#pagination').pagination({
+        dataSource: html,
+        pageSize: 15,
+        callback: function(data, pagination) {
+            $('#fav_list').html(data);
+            
+        }
+    });
+    $('.paginationjs-prev').html(`<a><i class="icofont-double-left"></i></a>`);
+$('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
+
   }
