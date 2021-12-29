@@ -90,7 +90,7 @@ router.on({
           console.log(res);
          $('#tt').text('Search');
               dic_body.innerHTML = `
-              <div class="word_head"> <div class="speaker"><i class="icofont-audio"></i> </div> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
+              <div class="word_head"> <div id="word_speak" class="speaker"><i class="icofont-audio"></i> </div> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
               <div class="word_prnc">/${res[0].phonetic}/</div>
               <div class="word_def"></div>
               <div class="origin"></div>
@@ -102,11 +102,11 @@ router.on({
                audio = new Audio(res[0].phonetics[0].audio);
                
               }else {
-                $('.speaker').hide();
+                $('#word_speak').hide();
                 $('.word_prnc').hide();
               }
 
-              $('.speaker').click(function(e){
+              $('#word_speak').click(function(e){
                   e.preventDefault();
                   audio.play();
               })
@@ -127,7 +127,7 @@ router.on({
                         word_def.innerHTML += `
                         <div class="def_body">
                         <div class="pos">${pos}</div>
-                        <div class="def">${res[0].meanings[i].definitions[0].definition}</div>
+                        <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="responsiveVoice.speak('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
                         <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                         <div class="syn" id="ant"><span class="dic_text">Antonyms: </span>${ant}</div>
                         </div>
@@ -137,7 +137,7 @@ router.on({
                         word_def.innerHTML += `
                     <div class="def_body">
                     <div class="pos">${pos}</div>
-                    <div class="def">${res[0].meanings[i].definitions[0].definition}</div>
+                    <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="responsiveVoice.speak('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
                     <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                     <div class="syn" id="syn"><span class="dic_text">Synonyms: </span>${syn}</div>
                     </div>
@@ -146,7 +146,7 @@ router.on({
                         word_def.innerHTML += `
                     <div class="def_body">
                     <div class="pos">${pos}</div>
-                    <div class="def">${res[0].meanings[i].definitions[0].definition}</div>
+                    <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="responsiveVoice.speak('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
                     <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                     </div>
                     `
@@ -155,7 +155,7 @@ router.on({
                     word_def.innerHTML += `
                     <div class="def_body">
                     <div class="pos">${res[0].meanings[i].partOfSpeech}</div>
-                    <div class="def">${res[0].meanings[i].definitions[0].definition}</div>
+                    <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="responsiveVoice.speak('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
                     <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                     <div class="syn" id="syn"><span class="dic_text">Synonyms: </span>${syn}</div>
                     <div class="syn" id="ant"><span class="dic_text">Antonyms: </span>${ant}</div>
@@ -167,7 +167,7 @@ router.on({
              if(res[0].origin !== undefined){ 
               $('.origin').html(`
               <div class="def_body">
-              <div class="org"><b>ORIGIN:</b> ${res[0].origin}</div>
+              <div class="org"><b>ORIGIN:</b> ${res[0].origin} <div onclick="responsiveVoice.speak('${res[0].origin}')" class="speaker"><i class="icofont-audio"></i></div>
               </div>
               `);}
 
@@ -179,20 +179,20 @@ router.on({
               <div class="dic_header">Bangla Academy Dictionary</div>
               <div class="img"><img onError="this.onerror=null;this.src='https://cdn.dribbble.com/users/88213/screenshots/8560585/media/7263b7aaa8077a322b0f12a7cd7c7404.png?compress=1&resize=200x200';" src="https://www.english-bangla.com/public/images/words/D${s_word[0]}/${s_word}"/></div>`);
              
-              var URL = 'https://www.english-bangla.com/public/images/words/D'+s_word[0]+'/'+s_word;
-              function testImage(URL) {
-                var tester=new Image();
-                tester.onload=imageFound;
-                tester.onerror=imageNotFound;
-                tester.src=URL;
-            }
-            function imageFound() {
-                console.log('That image is found and loaded');
-            }
-            function imageNotFound() {
-                console.log('That image was not found.');
-            }
-            testImage(URL);
+            //   var URL = 'https://www.english-bangla.com/public/images/words/D'+s_word[0]+'/'+s_word;
+            //   function testImage(URL) {
+            //     var tester=new Image();
+            //     tester.onload=imageFound;
+            //     tester.onerror=imageNotFound;
+            //     tester.src=URL;
+            // }
+            // function imageFound() {
+            //     console.log('That image is found and loaded');
+            // }
+            // function imageNotFound() {
+            //     console.log('That image was not found.');
+            // }
+            // testImage(URL);
 
     
             AddFav(s_word);
@@ -397,6 +397,3 @@ $('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
   
   }
 
-  var audio = new Audio();
-audio.src ='http://translate.google.com/translate_tts?ie=utf-8&tl=en&q=Hello%20World.';
-audio.play();

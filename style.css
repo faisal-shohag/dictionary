@@ -79,7 +79,7 @@ font-size: 30px;
     
 }
 
-.word_head .speaker{
+ .speaker{
     font-size: 20px;
     color: blue;
     height: 30px;
@@ -116,6 +116,13 @@ font-size: 30px;
 .def{
     font-size: 17px;
     font-weight: bold;
+    /* display: flex; */
+    /* align-items: center; */
+}
+
+.def div{
+    /* position: absolute; */
+    right: 0;
 }
 
 .ex{
