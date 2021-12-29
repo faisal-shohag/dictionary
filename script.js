@@ -4,6 +4,7 @@ var app = document.querySelector('#app');
 
 router.on(function(){
     app.innerHTML= `
+    <div class="animate__animated animate__fadeIn animate_faster body">
     <div class="top_title">Dictionary</div>
     <center id="prg">
     <div class="progress grey">
@@ -20,6 +21,7 @@ router.on(function(){
 
     <div class="menu_item">
     <a href="#!/favorites"><div class="menu_logo"><i class="icofont-favourite"></i></div> <div class="menu_title">Favorite Words</div></a>
+    </div>
     </div>
     `
    
@@ -67,6 +69,7 @@ router.on({
     "search/:id": function(params){
         
         app.innerHTML= `
+        <div class="animate__animated animate__fadeInUp animate_faster body">
     <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">Searching...</span></div>
     <div class="dic_body">
     <center id="prg">
@@ -75,7 +78,8 @@ router.on({
 </div>
     </center>
     </div>
-    <div class="bn_img"></div>`;
+    <div class="bn_img"></div>
+    </div>`;
     const dic_body = document.querySelector('.dic_body');
         let s_word = params.id;
         // console.log(s_word);
@@ -204,11 +208,12 @@ router.on({
                       }else{
                           $('#prg').hide();
                           app.innerHTML = `
+                          <div class="animate__animated animate__fadeInUp animate_faster body">
                           <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">Search</span></div>
                           <div class="word_head"> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
                             <div style="margin-top: 30px;" class="def_body">
                             <div class="def">${ht[3]}</div>
-                            </div>
+                            </div></div>
                           `
 
                           AddFav(params.id);
@@ -222,6 +227,7 @@ router.on({
 
     "favorites": function(){
         app.innerHTML = `
+        <div class="animate__animated animate__fadeIn animate_faster body">
         <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">Favorites...</span></div>
         <center id="prg">
         <div class="progress grey">
@@ -230,6 +236,7 @@ router.on({
         </center>
         <div id="fav_list"></div>
         <div id="pagination"></div>
+        </div>
         `
 
         db.ref('app/dic/favs').on('value', f=>{
