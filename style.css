@@ -233,7 +233,8 @@ padding: 10px;
 
   .top_title_screen{
       font-family: Lato;
-      font-size: 30px;
+      font-size: 28px;
+      font-weight: 900;
   }
 
   .menu_item_no_action{
