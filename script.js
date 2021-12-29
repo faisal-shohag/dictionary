@@ -14,7 +14,7 @@ router.on(function(){
     <i class="icofont-search-1 prefix"></i>
     <input id="search" name="search" type="text" placeholder="Search word" />
 
-    <div class="dic_header">Recent Search <a href="#!/history"><div class="dic_head_sub">See all</div></a></div>
+    <div class="dic_header">Recent Search <a href="#!/history"><div style="display:none;" class="dic_head_sub">See all</div></a></div>
     <div class="history"></div>
     </div>
 
