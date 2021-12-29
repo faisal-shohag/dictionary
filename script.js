@@ -109,7 +109,7 @@ router.on({
               }else {
                 $('#word_speak').hide();
                 $('.word_prnc').hide();
-                $('#not_found').html(`<div id="word_speak" onclick="textToSpeech('${s_word}')"  class="speaker"><i class="icofont-audio"></i> </div>`)
+                $('#not_found').html(`<div id="word_speak" onclick="responsiveVoice.speak('${s_word}')"  class="speaker"><i class="icofont-audio"></i> </div>`)
               }
 
              ;
@@ -130,7 +130,7 @@ router.on({
                         word_def.innerHTML += `
                         <div class="def_body">
                         <div class="pos">${pos}</div>
-                        <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="textToSpeech('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
+                        <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="responsiveVoice.speak('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
                         <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                         <div class="syn" id="ant"><span class="dic_text">Antonyms: </span>${ant}</div>
                         </div>
@@ -140,7 +140,7 @@ router.on({
                         word_def.innerHTML += `
                     <div class="def_body">
                     <div class="pos">${pos}</div>
-                    <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="textToSpeech('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
+                    <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="responsiveVoice.speak('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
                     <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                     <div class="syn" id="syn"><span class="dic_text">Synonyms: </span>${syn}</div>
                     </div>
@@ -149,7 +149,7 @@ router.on({
                         word_def.innerHTML += `
                     <div class="def_body">
                     <div class="pos">${pos}</div>
-                    <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="textToSpeech('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
+                    <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="responsiveVoice.speak('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
                     <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                     </div>
                     `
@@ -158,7 +158,7 @@ router.on({
                     word_def.innerHTML += `
                     <div class="def_body">
                     <div class="pos">${res[0].meanings[i].partOfSpeech}</div>
-                    <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="textToSpeech('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
+                    <div class="def">${res[0].meanings[i].definitions[0].definition} <div onclick="responsiveVoice.speak('${res[0].meanings[i].definitions[0].definition}')" class="speaker"><i class="icofont-audio"></i></div></div>
                     <div class="ex">"${res[0].meanings[i].definitions[0].example}"</div>
                     <div class="syn" id="syn"><span class="dic_text">Synonyms: </span>${syn}</div>
                     <div class="syn" id="ant"><span class="dic_text">Antonyms: </span>${ant}</div>
@@ -169,10 +169,10 @@ router.on({
               }
              if(res[0].origin !== undefined){ 
                  let v = (res[0].origin). replace(/'/g,'');
-                //  console.log(v);
+                 console.log(v);
               $('.origin').html(`
               <div class="def_body">
-              <div class="org"><b>ORIGIN:</b> ${res[0].origin} <div onclick="textToSpeech('${v}')" class="speaker"><i class="icofont-audio"></i></div>
+              <div class="org"><b>ORIGIN:</b> ${res[0].origin} <div onclick="responsiveVoice.speak('${v}')" class="speaker"><i class="icofont-audio"></i></div>
               </div>
               `);}
 
@@ -285,13 +285,13 @@ function AddFav(s_word){
                 date: (new Date()).toString()
             });
             M.toast({html: 'Added to favorite', classes: 'green'});
-            textToSpeech('Added to favorite!');
+            responsiveVoice.speak('Added to favorite!');
             AddFav(s_word);
             return;
            }else{
                db.ref('app/dic/favs/'+keyFound).remove();
               M.toast({html: 'Removed from favorite', classes: 'red'});
-              textToSpeech('Removed from favorite');
+              responsiveVoice.speak('Removed from favorite');
               $('.add_fav').css("color", "#8d8b8b");
 
           AddFav(s_word);
@@ -402,33 +402,5 @@ $('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
         })
     });
   
-  }
-
-
-
-  function textToSpeech(sent){
-    $(function(){
-        if ('speechSynthesis' in window) {
-          // speechSynthesis.onvoiceschanged = function() {
-          // }
-      
-         // $('#speak').click(function(){
-            var text = sent;
-            var msg = new SpeechSynthesisUtterance();
-            var voices = window.speechSynthesis.getVoices();
-            msg.voice = voices[2];
-            msg.rate = 1;
-            msg.pitch = 1;
-            msg.text = text;
-            msg.onend = function(e) {
-              console.log('Finished in ' + e.elapsedTime + ' seconds.');
-            };
-      
-            speechSynthesis.speak(msg);
-        //  })
-        } else {
-         // $('#modal1').openModal();
-        }
-      });
   }
 
