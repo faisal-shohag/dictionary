@@ -377,14 +377,14 @@ $('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
             if(ht[3].includes('Providing the maximum meaning of a word by combining the best sources with us.')){
                 //console.log('Not Found');
                   Swal.fire({
-                      icon: 'error',
-                      title: e.responseJSON.title,
-                      html: e.responseJSON.resolution,
-                      showConfirmButton: true,
-                      timer: 5000
-                   }).then(r=>{
-                          router.navigate('/');
-                      });
+                    icon: 'error',
+                    title: 'Not Found any Word',
+                    html: 'This may cause becasue of typo!',
+                    showConfirmButton: true,
+                    timer: 5000
+                 }).then(r=>{
+                        router.navigate('/');
+                    });
     //console.log(e.responseJSON);
             }else{
                 $('#prg').hide();
@@ -400,7 +400,8 @@ $('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
                 AddFav(s_word);
             }
         })
-    });
+    })
   
   }
+
 
