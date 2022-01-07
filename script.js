@@ -13,7 +13,7 @@ router.on(function(){
     </center>
     <div class="input-field search">
     <i class="icofont-search-1 prefix"></i>
-    <input id="search" name="search" type="text" placeholder="Search word" />
+    <input id="search" name="search" type="text" placeholder="Search English or Bengali" />
 
     <div class="dic_header">Recent Searches <a href="#!/history"><div style="display: none;"  class="dic_head_sub">See all</div></a></div>
     <div class="history"></div>
@@ -33,7 +33,7 @@ router.on(function(){
         history.innerHTML="";
         words = s.val().words;
         for(let i=0; i<words.length; i++){
-           
+
             history.innerHTML += `
                 <div class="word_list">
                 <a href="#!/search/${words[i]}"><div class="word">${words[i]}</div></a>
@@ -41,9 +41,8 @@ router.on(function(){
             `
         }
         document.getElementById('search').addEventListener('keyup', function(event){
-            if(event.key === 'Enter'){
+            if(event.key === 'Enter') {
                 event.preventDefault();
-
                 let s_word = (this.value).toLowerCase();
                 let allw = words.join(', ');
                 if(!allw.includes(s_word)){
@@ -51,24 +50,21 @@ router.on(function(){
                     words.pop();
                     words.unshift(s_word);
                 }else{
-                    words.push(s_word)
+                    words.push(s_word);
                 }
                 db.ref('app/dic/search_history/').update({words: words});
             }
                 router.navigate('/search/'+s_word);
-                // console.log(words);
-            }
+         }
+      });
     });
-    
-    })
-
-   
-
 }).resolve();
 
 router.on({
-    "search/:id": function(params){
-        
+    "search/:id": function(params){  
+      if (document.contains(document.getElementById("share-snippet"))) {
+        document.getElementById("share-snippet").remove();
+    }
         app.innerHTML= `
         <div class="animate__animated animate__fadeInUp body">
     <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">Searching...</span></div>
@@ -83,7 +79,6 @@ router.on({
     </div>`;
     const dic_body = document.querySelector('.dic_body');
         let s_word = params.id;
-        // console.log(s_word);
         $(function(){
           $.get('https://api.dictionaryapi.dev/api/v2/entries/en/'+s_word, function(){})
           .done(function(res){
@@ -94,7 +89,9 @@ router.on({
               <div class="word_prnc">/${res[0].phonetic}/</div>
               <div class="word_def"></div>
               <div class="origin"></div>
+              
               `
+              //console.log(f)
               $('.add_fav').hide();
 
               let audio;
@@ -111,8 +108,6 @@ router.on({
                 $('.word_prnc').hide();
                 $('#not_found').html(`<div id="word_speak" onclick="responsiveVoice.speak('${s_word}')"  class="speaker"><i class="icofont-audio"></i> </div>`)
               }
-
-             ;
               
               let word_def = document.querySelector('.word_def');
               let meanings = res[0].meanings;
@@ -405,3 +400,59 @@ $('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
   }
 
 
+//<a href="https://bdnews24.com/bangladesh/2021/12/31/bangladesh-reports-512-covid-cases-2-deaths-in-a-day">Bangladesh reports 512 COVID cases, 2 deaths in a day</a>
+
+
+/*
+
+let res = /^[a-zA-Z]+$/.test('sfjd');
+console.log(res);
+
+*/
+
+function getSelectionText() {
+  var text = "";
+  if (window.getSelection) {
+      text = window.getSelection().toString();
+  } else if (document.selection && document.selection.type != "Control") { // for Internet Explorer 8 and below
+      text = document.selection.createRange().text;
+  }
+  return text;
+}
+
+app.addEventListener('mouseup', handlerFunction, false);
+
+// Mouse up event handler function
+function handlerFunction(event) {
+    
+    // If there is already a share dialog, remove it
+    if (document.contains(document.getElementById("share-snippet"))) {
+        document.getElementById("share-snippet").remove();
+    }
+    
+    // Check if any text was selected
+    if(window.getSelection().toString().length > 0) {
+
+        // Get selected text and encode it
+        const selection = encodeURIComponent(window.getSelection().toString()).replace(/[!'()*]/g, escape);
+        
+        // Find out how much (if any) user has scrolled
+        var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+        
+        // Get cursor position
+        const posX = event.clientX - 110;
+        const posY = event.clientY + 20 + scrollTop;
+      
+        // Create Twitter share URL
+     
+        // Append HTML to the body, create the "Tweet Selection" dialog
+        document.body.insertAdjacentHTML('beforeend', `<div id="share-snippet" class="sl" style="position: absolute; top: ${posY}px; left: ${posX}px;"><div class="speech-bubble"><div class="share-inside"><a href="#!/search/${selection}">${selection}</a></div></div></div>`);
+   
+    }
+
+  
+}
+
+function sel(selection){
+  router.navigate('/search/'+selection);
+}

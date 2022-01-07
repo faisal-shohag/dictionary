@@ -373,3 +373,41 @@ padding: 10px;
     cursor: pointer;
 }
 
+
+.speech-bubble {
+    position: relative;
+    background: #310e91;
+    border-radius: .4em;
+    color: white;
+  }
+  
+  .speech-bubble:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-bottom-color: #2f179c;
+    border-top: 0;
+    margin-left: -12px;
+    margin-top: -12px;
+  }
+  
+  .share-inside {
+    background: url('./images/search.png');
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 20px 20px;
+    
+  }
+  
+  .share-inside a {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 10px;
+    padding-left: 40px;
+  }
