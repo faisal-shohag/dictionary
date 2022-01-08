@@ -429,7 +429,7 @@ function getSelectionText() {
 }
 
 
-$('div').mouseup(function(){
+$('div').on('change mouseup mousedown keydown',function(){
 let sl = getSelectionText();
 
 if(sl.length>1){
