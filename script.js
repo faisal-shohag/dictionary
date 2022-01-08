@@ -92,11 +92,8 @@ router.on({
               <div class="word_prnc">/${res[0].phonetic}/</div>
               <div class="word_def"></div>
               <div class="origin"></div>
-              
               `
-              //console.log(f)
               $('.add_fav').hide();
-
               let audio;
               if(res[0].phonetic !== undefined){
                audio = new Audio(res[0].phonetics[0].audio);
@@ -172,35 +169,11 @@ router.on({
               <div class="def_body">
               <div class="org"><b>ORIGIN:</b> ${res[0].origin} <div onclick="responsiveVoice.speak('${v}')" class="speaker"><i class="icofont-audio"></i></div>
               </div>
-              `);}
-
-              
-
-
-
+              `)}
               $('.bn_img').html(`
               <div class="dic_header">Bangla Academy Dictionary</div>
               <div class="img"><img onError="this.onerror=null;this.src='https://cdn.dribbble.com/users/88213/screenshots/8560585/media/7263b7aaa8077a322b0f12a7cd7c7404.png?compress=1&resize=200x200';" src="https://www.english-bangla.com/public/images/words/D${s_word[0]}/${s_word}"/></div>`);
-             
-            //   var URL = 'https://www.english-bangla.com/public/images/words/D'+s_word[0]+'/'+s_word;
-            //   function testImage(URL) {
-            //     var tester=new Image();
-            //     tester.onload=imageFound;
-            //     tester.onerror=imageNotFound;
-            //     tester.src=URL;
-            // }
-            // function imageFound() {
-            //     console.log('That image is found and loaded');
-            // }
-            // function imageNotFound() {
-            //     console.log('That image was not found.');
-            // }
-            // testImage(URL);
-
-    
             AddFav(s_word);
-              
-
             }).fail(e=>{
               $('.bn_img').html(``);
               bnAc(s_word);
@@ -260,8 +233,113 @@ router.on({
       app.innerHTML = `
       <div class="animate__animated animate__fadeIn body">
       <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">News...</span></div>
+      <center id="prg">
+        <div class="progress grey">
+        <div class="indeterminate red"></div>
+    </div>
+        </center>
+      <div class="news_list"></div>
       </div>
       `
+        $(function(){
+            $.get('https://api.allorigins.win/get?url=https://www.thedailystar.net/top-news', ()=>{})
+            .done(res=>{
+              $('#tt').text('News');
+              $('#prg').hide();
+              const nw = document.querySelector('.news_list');
+              nw.innerHTML='';
+            let news = res.contents.split('\n');
+            let line = 0;
+            //console.log(news);
+            for(let i=0; i<news.length; i++){
+              if(news[i].includes('top-news-ticker-runner')){
+                line = i;
+                break;
+              }
+            }
+            let headlines = news[line+1].split('</a>');
+            for(let i=0; i<headlines.length-1; i++){
+              let a = headlines[i].split('>');
+              let b = a[0].split('"');
+              //console.log(b[1]);
+              b = b[1].split('/');
+              b = b.join('|');
+              if(a[1].length>0){
+              nw.innerHTML +=`
+              <div class="menu_item nw">
+              <a href="#!/newsparse/${b}/${a[1]}"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-news"></i></div> <div class="menu_title" style="color:#316e0d; font-size: 14px">${a[1]}</div></a>
+              </div>`;
+            }
+            }
+            // $('.nw').click(function(e){
+            //   e.preventDefault();
+            //   let id = $(this)[0].id;
+            //   console.log(id);
+            //   router.navigate('/news_parse/'+id);
+            // });
+
+            }).fail(e=>{
+              
+            });
+
+         });
+            
+    },
+    "/newsparse/:id/:title":function(params){
+      console.log(params.id);
+      let id = (params.id).split('|');
+      id = id.join('/');
+      app.innerHTML = `
+      <div class="animate__animated animate__fadeIn body">
+      <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">News...</span></div>
+      <center id="prg">
+        <div class="progress grey">
+        <div class="indeterminate red"></div>
+    </div>
+        </center>
+        <div class="newsbody">
+       <center>
+       <div class="preloader-wrapper active">
+       <div class="spinner-layer spinner-green-only">
+         <div class="circle-clipper left">
+           <div class="circle"></div>
+         </div><div class="gap-patch">
+           <div class="circle"></div>
+         </div><div class="circle-clipper right">
+           <div class="circle"></div>
+         </div>
+       </div>
+     </div>
+       </center> 
+        </div>
+      </div>
+      `
+      const newsbody = document.querySelector('.newsbody');
+      $(function(){
+        $.get('https://api.allorigins.win/get?url=https://www.thedailystar.net'+id, ()=>{})
+        .done(res=>{
+          $('#tt').text('News');
+          $('#prg').hide();
+          let news = res.contents.split('\n');
+          let s=0;
+          let e=0;
+          let img='';
+          for(let i=0; i<news.length; i++){
+            if(news[i].includes('data-exthumbimage')) img = news[i];
+            if(news[i].includes('section-content margin-lr pt-20 pb-20 clearfix')){
+              s=i;
+            }
+            if(news[i].includes('mb-20 mr-20 hide-for-print dfp-tag-wrapper text-center')) e=i;
+          }
+          img = img.split('"');
+          newsbody.innerHTML=`<div class="news_title"><i class="icofont-news"></i> ${params.title}</div><div class="news_image"><img src="${img[5]}"/></div>`;
+          for(let i=s; i<e; i++){
+            newsbody.innerHTML += `
+            ${news[i]}
+            `
+          }
+        })
+      });
     }
 
 }).resolve();

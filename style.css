@@ -460,3 +460,30 @@ padding: 10px;
       border: 1px solid #eeee;
       width: 60px;
   }
+
+  
+  .newsbody{
+      font-family: Lato;
+      font-size: 16px;
+      background: #fff;
+      padding: 10px;
+  }
+
+.news_title{
+ font-size: 20px;
+ margin-bottom: 10px;
+ font-weight: 900;
+}
+
+  .newsbody strong, .article-section b {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.news_image{
+    display: flex;
+    justify-content: center;
+}
+.news_image img{
+    width: 80%;
+}
