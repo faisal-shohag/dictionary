@@ -487,3 +487,7 @@ padding: 10px;
 .news_image img{
     width: 80%;
 }
+
+.hide-for-print{
+    display: none;
+}
