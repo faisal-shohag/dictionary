@@ -417,7 +417,7 @@ padding: 10px;
 
   .selected_modal{
       display: none;
-      position: absolute;
+      position: fixed;
       bottom: 0;
       left: 0;
       font-family: Lato;
