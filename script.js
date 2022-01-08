@@ -13,7 +13,7 @@ router.on(function(){
     </center>
     <div class="input-field search">
     <i class="icofont-search-1 prefix"></i>
-    <input id="search" name="search" type="text" placeholder="Search English or Bengali" />
+    <input id="search" name="search" type="text" placeholder="Search English" />
 
     <div class="dic_header">Recent Searches <a href="#!/history"><div style="display: none;"  class="dic_head_sub">See all</div></a></div>
     <div class="history"></div>
@@ -24,7 +24,7 @@ router.on(function(){
     <a href="#!/favorites"><div class="menu_logo"><i class="icofont-favourite"></i></div> <div class="menu_title">Favorite Words</div></a>
     </div>
     <div class="menu_item">
-    <a href="#!/favorites"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-newspaper"></i></div> <div class="menu_title" style="color:#316e0d;">News Paper</div></a>
+    <a href="#!/newspaper"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-newspaper"></i></div> <div class="menu_title" style="color:#316e0d;">News Paper</div></a>
     </div>
     </div>
     `
@@ -256,6 +256,13 @@ router.on({
              $('.dic_head_sub').addClass('animate_animated animate__fadeInRight');
            });
     },
+    "newspaper": function(){
+      app.innerHTML = `
+      <div class="animate__animated animate__fadeIn body">
+      <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">News...</span></div>
+      </div>
+      `
+    }
 
 }).resolve();
 
