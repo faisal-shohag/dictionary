@@ -298,8 +298,11 @@ padding: 10px;
      color: #d81e1e;
      background: #d81e1e57;
      border-radius: 3px;
+    
      
   }
+
+
 
   .menu_title{
     font-family: Lato;
@@ -410,4 +413,50 @@ padding: 10px;
     font-size: 14px;
     padding: 10px;
     padding-left: 40px;
+  }
+
+  .selected_modal{
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-family: Lato;
+      width: 100%;
+      padding: 10px;
+      background: #fff;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      min-height: 100px;
+  }
+
+  .modal_sl_title{
+    font-family: 'Abril Fatface', cursive;
+    font-size: 16px;
+  }
+
+  .meaning{
+      font-size: 14px;
+  }
+
+  .close{
+      /* float: right; */
+      position: absolute;
+      right: 2%;
+      font-size: 16px;
+      padding: 5px;
+      border: 1px solid #eeee;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 99;
+  }
+
+  .more{
+      font-weight: bold;
+      color: slateblue;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 5px;
+      padding: 2px 2px;
+      border: 1px solid #eeee;
+      width: 60px;
   }

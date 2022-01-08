@@ -23,6 +23,9 @@ router.on(function(){
     <div class="menu_item">
     <a href="#!/favorites"><div class="menu_logo"><i class="icofont-favourite"></i></div> <div class="menu_title">Favorite Words</div></a>
     </div>
+    <div class="menu_item">
+    <a href="#!/favorites"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-newspaper"></i></div> <div class="menu_title" style="color:#316e0d;">News Paper</div></a>
+    </div>
     </div>
     `
    
@@ -252,7 +255,8 @@ router.on({
              $('.dic_head_sub').html(`See All`);
              $('.dic_head_sub').addClass('animate_animated animate__fadeInRight');
            });
-    }
+    },
+
 }).resolve();
 
 
@@ -400,8 +404,12 @@ $('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
   }
 
 
-//<a href="https://bdnews24.com/bangladesh/2021/12/31/bangladesh-reports-512-covid-cases-2-deaths-in-a-day">Bangladesh reports 512 COVID cases, 2 deaths in a day</a>
 
+
+
+
+
+//<a href="https://bdnews24.com/bangladesh/2021/12/31/bangladesh-reports-512-covid-cases-2-deaths-in-a-day">Bangladesh reports 512 COVID cases, 2 deaths in a day</a>
 
 /*
 
@@ -420,39 +428,76 @@ function getSelectionText() {
   return text;
 }
 
-app.addEventListener('mouseup', handlerFunction, false);
 
-// Mouse up event handler function
-function handlerFunction(event) {
-    
-    // If there is already a share dialog, remove it
-    if (document.contains(document.getElementById("share-snippet"))) {
-        document.getElementById("share-snippet").remove();
-    }
-    
-    // Check if any text was selected
-    if(window.getSelection().toString().length > 0) {
+$('div').mouseup(function(){
+let sl = getSelectionText();
 
-        // Get selected text and encode it
-        const selection = encodeURIComponent(window.getSelection().toString()).replace(/[!'()*]/g, escape);
+if(sl.length>1){
+  $('.selected_modal').show();
+  $('.selected_modal').removeClass('animate__bounceOutDown');
+  $('.selected_modal').addClass('animate__animated animate__bounceInUp animate__faster');
+  //console.log("selected: "+ sl);
+  $('.selected_modal').html(`
+  <div class="close cl"><i class="icofont-close"></i></div>
+  <div class="modal_sl_title animate__animated animate__fadeIn">${sl}</div>
+  <div class="meaning"></div>
+  <center><a href="#!/search/${sl}"><div class="more">more..</div></a></center>
+  `);
+
+ 
+
+  $(function(){
+    $.get('https://api.dictionaryapi.dev/api/v2/entries/en/'+sl, function(){})
+    .done(function(res){
+     $('.meaning').html(`<div class="animate__animated animate__fadeInUp"><i>${res[0].meanings[0].partOfSpeech}</i> - <b>${res[0].meanings[0].definitions[0].definition}</b></div>`);
+    });
+  });
+ 
+}
+$('.cl').click(function(){
+  console.log('CLOSE');
+  $('.selected_modal').removeClass('animate__bounceOutUp');
+  $('.selected_modal').addClass('animate__bounceOutDown');
+  
+});
+
+});
+
+
+
+// app.addEventListener('mouseup', handlerFunction, false);
+
+// // Mouse up event handler function
+// function handlerFunction(event) {
+    
+//     // If there is already a share dialog, remove it
+//     if (document.contains(document.getElementById("share-snippet"))) {
+//         document.getElementById("share-snippet").remove();
+//     }
+    
+//     // Check if any text was selected
+//     if(window.getSelection().toString().length > 0) {
+
+//         // Get selected text and encode it
+//         const selection = encodeURIComponent(window.getSelection().toString()).replace(/[!'()*]/g, escape);
         
-        // Find out how much (if any) user has scrolled
-        var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+//         // Find out how much (if any) user has scrolled
+//         var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
         
-        // Get cursor position
-        const posX = event.clientX - 110;
-        const posY = event.clientY + 20 + scrollTop;
+//         // Get cursor position
+//         const posX = event.clientX - 110;
+//         const posY = event.clientY + 20 + scrollTop;
       
-        // Create Twitter share URL
+//         // Create Twitter share URL
      
-        // Append HTML to the body, create the "Tweet Selection" dialog
-        document.body.insertAdjacentHTML('beforeend', `<div id="share-snippet" class="sl" style="position: absolute; top: ${posY}px; left: ${posX}px;"><div class="speech-bubble"><div class="share-inside"><a href="#!/search/${selection}">${selection}</a></div></div></div>`);
+//         // Append HTML to the body, create the "Tweet Selection" dialog
+//         document.body.insertAdjacentHTML('beforeend', `<div id="share-snippet" class="sl" style="position: absolute; top: ${posY}px; left: ${posX}px;"><div class="speech-bubble"><div class="share-inside"><a href="#!/search/${selection}">${selection}</a></div></div></div>`);
    
-    }
+//     }
 
   
-}
+// }
 
-function sel(selection){
-  router.navigate('/search/'+selection);
-}
+// function sel(selection){
+//   router.navigate('/search/'+selection);
+// }
