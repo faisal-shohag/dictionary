@@ -517,7 +517,7 @@ function getSelectionText() {
 $('div').on('change mouseup mousedown keydown',function(){
 let sl = getSelectionText();
 
-if(sl.length>1){
+if(sl.length>1 && sl.length<18){
   $('.selected_modal').show();
   $('.selected_modal').removeClass('animate__bounceOutDown');
   $('.selected_modal').addClass('animate__animated animate__bounceInUp animate__faster');
