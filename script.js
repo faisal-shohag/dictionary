@@ -24,7 +24,7 @@ router.on(function(){
     <a href="#!/favorites"><div class="menu_logo"><i class="icofont-favourite"></i></div> <div class="menu_title">Favorite Words</div></a>
     </div>
     <div class="menu_item">
-    <a href="#!/newspaper"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-newspaper"></i></div> <div class="menu_title" style="color:#316e0d;">News from Daily Star</div></a>
+    <a href="#!/newspaper"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-newspaper"></i></div> <div class="menu_title" style="color:#316e0d; display: flex; flex-direction: row; width: 100%; align-items: center; gap: 5px;"><span>News from</span> <img height="20px" src="https://img.thedailystar.net/sites/all/themes/sloth/logo.svg"/></div></a>
     </div>
     </div>
     `
@@ -360,7 +360,7 @@ router.on({
               if(a[1].length>0){
               nw.innerHTML +=`
               <div class="menu_item nw">
-              <a href="#!/newsparse/${b}/${a[1]}"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-news"></i></div> <div class="menu_title" style="color:#316e0d; font-size: 14px; font-family: 'Copyright Klim Type Foundry';">${a[1]}</div></a>
+              <a href="#!/newsparse/${b}/${a[1]}"><div class="menu_logo" style="color: #316e0d;background: #fff; padding: 5px; height: 25px width: 25px; border-radius: 50%; border: 1px solid #eee;"><img height="25px" src="https://img.thedailystar.net/sites/default/files/styles/small_201/public/default_fallback.jpg"/></div> <div class="menu_title" style="color:#316e0d; font-size: 14px; font-family: 'Copyright Klim Type Foundry';">${a[1]}</div></a>
               </div>`;
             }
             }
