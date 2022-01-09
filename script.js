@@ -356,11 +356,12 @@ router.on({
               let b = a[0].split('"');
               //console.log(b[1]);
               b = b[1].split('/');
-              b = b.join('|');
+              b = b.join('~');
               if(a[1].length>0){
+               let c = a[1].replace('%', '~');
               nw.innerHTML +=`
               <div class="menu_item nw">
-              <a href="#!/newsparse/${b}/${a[1]}"><div class="menu_logo" style="color: #316e0d;background: #fff; padding: 5px; height: 25px width: 25px; border-radius: 50%; border: 1px solid #eee;"><img height="25px" src="https://img.thedailystar.net/sites/default/files/styles/small_201/public/default_fallback.jpg"/></div> <div class="menu_title" style="color:#316e0d; font-size: 14px; font-family: 'Copyright Klim Type Foundry';">${a[1]}</div></a>
+              <a href="#!/newsparse/${b}/${c}"><div class="menu_logo" style="color: #316e0d;background: #fff; padding: 5px; height: 25px width: 25px; border-radius: 50%; border: 1px solid #eee;"><img height="25px" src="https://img.thedailystar.net/sites/default/files/styles/small_201/public/default_fallback.jpg"/></div> <div class="menu_title" style="color:#316e0d; font-size: 14px; font-family: 'Copyright Klim Type Foundry';">${a[1]}</div></a>
               </div>`;
             }
             }
@@ -373,8 +374,10 @@ router.on({
     },
     "/newsparse/:id/:title":function(params){
       console.log(params.id);
-      let id = (params.id).split('|');
+      let id = (params.id).split('~');
       id = id.join('/');
+      let title = params.title;
+      title = title.replace('~', '%');
       app.innerHTML = `
       <div class="animate__animated animate__fadeIn body">
       <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">News...</span></div>
@@ -418,7 +421,7 @@ router.on({
             if(news[i].includes('mb-20 mr-20 hide-for-print dfp-tag-wrapper text-center')) e=i;
           }
           img = img.split('"');
-          newsbody.innerHTML=`<div class="news_title"><i class="icofont-news"></i> ${params.title}</div><div class="news_image"><img src="${img[5]}"/></div>`;
+          newsbody.innerHTML=`<div class="news_title"><i class="icofont-news"></i> ${title}</div><div class="news_image"><img src="${img[5]}"/></div>`;
           for(let i=s; i<e; i++){
             newsbody.innerHTML += `
             ${news[i]}
