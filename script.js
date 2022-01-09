@@ -5,7 +5,7 @@ var app = document.querySelector('#app');
 router.on(function(){
     app.innerHTML= `
     <div class="animate__animated animate__fadeIn body">
-    <div class="top_title">Dictionary</div>
+    <div class="top_title"><div class="w">W</div>ord<div class="cursive">profound</div></div>
     <center id="prg">
     <div class="progress grey">
     <div class="indeterminate red"></div>
@@ -24,7 +24,7 @@ router.on(function(){
     <a href="#!/favorites"><div class="menu_logo"><i class="icofont-favourite"></i></div> <div class="menu_title">Favorite Words</div></a>
     </div>
     <div class="menu_item">
-    <a href="#!/newspaper"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-newspaper"></i></div> <div class="menu_title" style="color:#316e0d;">News Paper</div></a>
+    <a href="#!/newspaper"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-newspaper"></i></div> <div class="menu_title" style="color:#316e0d;">News from Daily Star</div></a>
     </div>
     </div>
     `
@@ -65,6 +65,8 @@ router.on(function(){
 
 router.on({
     "search/:id": function(params){  
+      $('.selected_modal').removeClass('animate__bounceOutUp');
+  $('.selected_modal').addClass('animate__bounceOutDown');
       if (document.contains(document.getElementById("share-snippet"))) {
         document.getElementById("share-snippet").remove();
     }
@@ -267,17 +269,10 @@ router.on({
               if(a[1].length>0){
               nw.innerHTML +=`
               <div class="menu_item nw">
-              <a href="#!/newsparse/${b}/${a[1]}"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-news"></i></div> <div class="menu_title" style="color:#316e0d; font-size: 14px">${a[1]}</div></a>
+              <a href="#!/newsparse/${b}/${a[1]}"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-news"></i></div> <div class="menu_title" style="color:#316e0d; font-size: 14px; font-family: 'Copyright Klim Type Foundry';">${a[1]}</div></a>
               </div>`;
             }
             }
-            // $('.nw').click(function(e){
-            //   e.preventDefault();
-            //   let id = $(this)[0].id;
-            //   console.log(id);
-            //   router.navigate('/news_parse/'+id);
-            // });
-
             }).fail(e=>{
               
             });
@@ -493,15 +488,6 @@ $('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
 
 
 
-
-//<a href="https://bdnews24.com/bangladesh/2021/12/31/bangladesh-reports-512-covid-cases-2-deaths-in-a-day">Bangladesh reports 512 COVID cases, 2 deaths in a day</a>
-
-/*
-
-let res = /^[a-zA-Z]+$/.test('sfjd');
-console.log(res);
-
-*/
 
 function getSelectionText() {
   var text = "";
