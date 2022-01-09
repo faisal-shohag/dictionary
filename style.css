@@ -6,6 +6,7 @@
     url("https://db.onlinewebfonts.com/t/2bd08e50de2f6bf200a884f65030af75.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
     url("https://db.onlinewebfonts.com/t/2bd08e50de2f6bf200a884f65030af75.svg#Copyright Klim Type Foundry") format("svg"); /* iOS 4.1- */
 }
+
 body{
     background-color: #F6F6F6;
 }
@@ -13,7 +14,6 @@ body{
 #app{
     padding-left: 10px;
     padding-right: 10px;
-    
 }
 
 .top_title{
@@ -21,12 +21,13 @@ body{
     align-items: center;
     gap: 2px;
     font-size: 30px;
-    /* margin-top: 10px; */
-    /* padding: 10px; */
-    font-family: Lato;
+    font-family: 'Lato', kalpurush;
     font-weight: 700;
     color: rgb(192, 189, 185);
 }
+
+
+
 .w{
     font-family: 'Lato', serif;
     background: crimson;
@@ -38,7 +39,6 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* margin-right: 2px; */
     font-weight: 900;
     color: #fff;
     border-radius: 3px;
@@ -52,15 +52,13 @@ body{
 
 .search input{
     color: #222;
-    font-family: Lato;
+    font-family: 'Lato', kalpurush;
     padding-left: 5px !important;
     margin: 0;
     border: 0;
     background-color: #eeee !important;
     border-bottom: 0 !important;
-    /* border: 2px solid black !important; */
     border-radius: 5px !important;
-    
 }
 
 .search{
@@ -78,7 +76,6 @@ body{
     border-radius: 5px;
  overflow-y: scroll;
  overflow-x: hidden;
-    /* bottom: 10px; */
     display: none;
 }
 
@@ -90,7 +87,7 @@ body{
 
 .word_head{
     font-size: 40px;
-    font-family: 'Abril Fatface', cursive;
+    font-family: 'Abril Fatface', cursive, kalpurush;
     display: flex;
     gap: 10px;
     align-items: center;
@@ -140,7 +137,6 @@ font-size: 30px;
 }
 
 .pos{
-    /* font-style: italic; */
     font-family: Lato;
     font-weight: bold;
     font-size: 18px;
@@ -150,8 +146,6 @@ font-size: 30px;
 .def{
     font-size: 17px;
     font-weight: bold;
-    /* display: flex; */
-    /* align-items: center; */
 }
 
 .def div{
@@ -224,7 +218,7 @@ padding: 10px;
 .word{
  font-size: 17px;
  /* font-family: 'Abril Fatface', cursive; */
- font-family: Lato;
+ font-family: 'Lato', kalpurush;
  font-weight: bold;
  color: rgb(7, 5, 5);
  padding-top: 0;
@@ -273,7 +267,7 @@ padding: 10px;
   }
 
   .top_title_screen{
-      font-family: Lato;
+      font-family: 'Lato', kalpurush;
       font-size: 28px;
       font-weight: 900;
   }

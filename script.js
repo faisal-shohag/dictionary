@@ -13,7 +13,7 @@ router.on(function(){
     </center>
     <div class="input-field search">
     <i class="icofont-search-1 prefix"></i>
-    <input id="search" name="search" type="text" placeholder="Search English" />
+    <input id="search" name="search" type="text" placeholder="Search English or বাংলা" />
 
     <div class="dic_header">Recent Searches <a href="#!/history"><div style="display: none;"  class="dic_head_sub">See all</div></a></div>
     <div class="history"></div>
@@ -36,12 +36,19 @@ router.on(function(){
         history.innerHTML="";
         words = s.val().words;
         for(let i=0; i<words.length; i++){
-
+          let res = /^[a-zA-Z]+$/.test(words[i]);
+            if(res)
             history.innerHTML += `
                 <div class="word_list">
                 <a href="#!/search/${words[i]}"><div class="word">${words[i]}</div></a>
                 </div>
             `
+            else 
+            history.innerHTML += `
+            <div class="word_list">
+            <a href="#!/search_bangla/${words[i]}"><div class="word">${words[i]}</div></a>
+            </div>
+        `
         }
         document.getElementById('search').addEventListener('keyup', function(event){
             if(event.key === 'Enter') {
@@ -57,7 +64,9 @@ router.on(function(){
                 }
                 db.ref('app/dic/search_history/').update({words: words});
             }
-                router.navigate('/search/'+s_word);
+            let res = /^[a-zA-Z]+$/.test(s_word);
+            if(res) router.navigate('/search/'+s_word);
+            else router.navigate('/search_bangla/'+s_word);
          }
       });
     });
@@ -84,6 +93,7 @@ router.on({
     </div>`;
     const dic_body = document.querySelector('.dic_body');
         let s_word = params.id;
+
         $(function(){
           $.get('https://api.dictionaryapi.dev/api/v2/entries/en/'+s_word, function(){})
           .done(function(res){
@@ -95,6 +105,7 @@ router.on({
               <div class="word_def"></div>
               <div class="origin"></div>
               `
+              
               $('.add_fav').hide();
               let audio;
               if(res[0].phonetic !== undefined){
@@ -182,7 +193,87 @@ router.on({
             });
         });
     },
+    "search_bangla/:id": function(params){
+      $('.selected_modal').removeClass('animate__bounceOutUp');
+      $('.selected_modal').addClass('animate__bounceOutDown');
+          if (document.contains(document.getElementById("share-snippet"))) {
+            document.getElementById("share-snippet").remove();
+        }
+            app.innerHTML= `
+            <div class="animate__animated animate__fadeInUp body">
+        <div class="top_title_screen" onclick="window.history.back()"><i class="icofont-simple-left"></i> <span id="tt">সার্চিং...</span></div>
+        <div class="dic_body">
+        <center id="prg">
+        <div class="progress grey">
+        <div class="indeterminate red"></div>
+    </div>
+        </center>
+        </div>
+        <div class="bn_img"></div>
+        </div>`;
+        const dic_body = document.querySelector('.dic_body');
+        let s_word = params.id;
+       
+        $(function(){
+        $.get('https://api.allorigins.win/get?url=https://www.edictionarybd.com/dictionary/b2e/'+s_word[0]+'/'+s_word+'.php', ()=>{})
+        .done(res=>{
+          $('#tt').text('সার্চ');
+          $('#prg').hide();
+          let body = res.contents.split('/');
+          //console.log(body);
+          let m = '';
+          for(let i=0; i<body.length; i++){
+            if(body[i].includes(s_word+' Meaning:')){
+              m=body[i+1];
+              break;
+            }
+          }
+          m = m.split('>');
+          m = m[1].split('<');
+          m = m[0].split(']');
+          let pos = m[0];
+          pos = pos.split('[')[1];
+          m = m[1].split(';');
+          m = m.join("");
+          m = m.split(".");
+          m = m[0].split(" ");
+         
 
+          dic_body.innerHTML = `
+          <div class="word_head"> <span id="not_found"></span> ${s_word} <div style="display: none;" class="add_fav"><i class="icofont-favourite"></i></div></div></div>
+          <div class="word_prnc"></div>
+          <div class="def_body">
+                        <div class="pos">${pos}</div>
+                        <div class="def bnen"></div>
+                        </div>
+          `
+          const bnen = document.querySelector('.bnen');
+          bnen.innerHTML='';
+          for(let i=0; i<m.length; i++){
+           if(m[i]!=''){
+              bnen.innerHTML+=`
+             <a href="#!/search/${m[i].toLowerCase()}">${m[i].toLowerCase()}</a>
+              `
+              if(m.length-1!=i) bnen.innerHTML+=',';
+            }
+            
+          }
+        }).fail(e=>{
+          Swal.fire({
+            icon: 'error',
+            title: 'Not Found any Word',
+            html: 'This may cause because of typo!',
+            showConfirmButton: true,
+            timer: 5000
+         }).then(r=>{
+                router.navigate('/');
+            });
+        })
+      });
+
+
+
+    },
     "favorites": function(){
         app.innerHTML = `
         <div class="animate__animated animate__fadeIn body">
@@ -458,7 +549,7 @@ $('.paginationjs-next').html(`<a><i class="icofont-double-right"></i></a>`);
                   Swal.fire({
                     icon: 'error',
                     title: 'Not Found any Word',
-                    html: 'This may cause becasue of typo!',
+                    html: 'This may cause because of typo!',
                     showConfirmButton: true,
                     timer: 5000
                  }).then(r=>{
@@ -507,7 +598,6 @@ if(sl.length>1 && sl.length<18){
   $('.selected_modal').show();
   $('.selected_modal').removeClass('animate__bounceOutDown');
   $('.selected_modal').addClass('animate__animated animate__bounceInUp animate__faster');
-  //console.log("selected: "+ sl);
   $('.selected_modal').html(`
   <div class="close cl"><i class="icofont-close"></i></div>
   <div class="modal_sl_title animate__animated animate__fadeIn">${sl}</div>
@@ -534,41 +624,3 @@ $('.cl').click(function(){
 
 });
 
-
-
-// app.addEventListener('mouseup', handlerFunction, false);
-
-// // Mouse up event handler function
-// function handlerFunction(event) {
-    
-//     // If there is already a share dialog, remove it
-//     if (document.contains(document.getElementById("share-snippet"))) {
-//         document.getElementById("share-snippet").remove();
-//     }
-    
-//     // Check if any text was selected
-//     if(window.getSelection().toString().length > 0) {
-
-//         // Get selected text and encode it
-//         const selection = encodeURIComponent(window.getSelection().toString()).replace(/[!'()*]/g, escape);
-        
-//         // Find out how much (if any) user has scrolled
-//         var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-        
-//         // Get cursor position
-//         const posX = event.clientX - 110;
-//         const posY = event.clientY + 20 + scrollTop;
-      
-//         // Create Twitter share URL
-     
-//         // Append HTML to the body, create the "Tweet Selection" dialog
-//         document.body.insertAdjacentHTML('beforeend', `<div id="share-snippet" class="sl" style="position: absolute; top: ${posY}px; left: ${posX}px;"><div class="speech-bubble"><div class="share-inside"><a href="#!/search/${selection}">${selection}</a></div></div></div>`);
-   
-//     }
-
-  
-// }
-
-// function sel(selection){
-//   router.navigate('/search/'+selection);
-// }
