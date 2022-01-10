@@ -90,7 +90,7 @@ router.on(function(){
             //   w = w[0].split(',');
             //   }
            // console.log(w[0]);
-            $('#bn').text('('+w[0]+')');
+            $('#bn').text('['+w[0]+']');
         })
       });
       
