@@ -26,8 +26,75 @@ router.on(function(){
     <div class="menu_item">
     <a href="#!/newspaper"><div class="menu_logo" style="color: #316e0d;background: #41800757;"><i class="icofont-newspaper"></i></div> <div class="menu_title" style="color:#316e0d; display: flex; flex-direction: row; width: 100%; align-items: center; gap: 5px;"><span>News from</span> <img height="20px" src="https://img.thedailystar.net/sites/all/themes/sloth/logo.svg"/></div></a>
     </div>
-    </div>
+   <div class="rem"></div>
     `
+    db.ref('app/dic/favs').once('value', f=>{
+      $('#prg').hide();
+      let data=[];
+      f.forEach(item=>{
+        data.push(item.val().word);
+      });
+      let randomWord = Math.floor(Math.random()*data.length);
+      let randomBackground = Math.floor(Math.random()*15);
+      let word = data[randomWord];
+      //console.log(data[randomWord]);
+      //console.log(gradientColorCode[randomBackground]);
+      $('.rem').html(`
+      <div style="background:${gradientColorCode[randomBackground]};" class="sug-card animate__animated animate__fadeIn">
+      <div class="title-1"><i class="icofont-brainstorming"></i> Remember</div>
+      <div class="title-word animate__animated animate__jello">${word}<span style="font-size: 15px" id="bn">(...)</span></div>
+      <div class="title-meaning"><center> <div class="preloader-wrapper small active">
+      <div class="spinner-layer spinner-green-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+          </center></div>
+          <center><a href="#!/search/${word}"><div style="color: #eee;" class="more">more...</div></a></center>
+      </div>
+ 
+      </div>
+      `);
+      $(function(){
+        $.get('https://api.dictionaryapi.dev/api/v2/entries/en/'+word, function(){})
+        .done(function(res){
+         $('.title-meaning').html(`<div class="animate__animated animate__fadeInUp"><i>${res[0].meanings[0].partOfSpeech}</i> - <b>${res[0].meanings[0].definitions[0].definition}</b></div>`);
+        }).fail(e=>{
+          $('.title-meaning').html(`<div class="animate__animated animate__fadeInUp" style="color: red; text-shadow: 0px 2px 3px rgba(0,0,0,.4);">No defination found!</div>`);
+        });
+      });
+
+      $(function(){
+        $.get('https://api.codetabs.com/v1/proxy?quest=https://www.english-bangla.com/dictionary/'+word, ()=>{})
+        .done(res=>{
+            let ht = res.split('\n');
+            let w ='';
+            for(let i=0;i<ht.length; i++){
+              if(ht[i].includes('description')){
+                w = ht[i];
+                break;
+              }
+            }
+            w = w.split('-');
+            w = w[1].split('|');
+           // console.log(w);
+            // if(w[0].includes(';')){
+            // w = w[0].split(';');
+            // }
+            // if(w[0].includes(',')){
+            //   w = w[0].split(',');
+            //   }
+            console.log(w[0]);
+            $('#bn').text('('+w[0]+')');
+        })
+      });
+      
+    });
    
     var words;
     db.ref('app/dic/search_history/').on('value', s=>{
@@ -97,7 +164,7 @@ router.on({
         $(function(){
           $.get('https://api.dictionaryapi.dev/api/v2/entries/en/'+s_word, function(){})
           .done(function(res){
-          console.log(res);
+         // console.log(res);
          $('#tt').text('Search');
               dic_body.innerHTML = `
               <div class="word_head"> <span id="not_found"><div id="word_speak"  class="speaker"><i class="icofont-audio"></i> </div></span> ${s_word} <div class="add_fav"><i class="icofont-favourite"></i></div></div></div>
@@ -627,3 +694,21 @@ $('.cl').click(function(){
 
 });
 
+
+var gradientColorCode={
+  0:"linear-gradient(to right, #2c3e50, #fd746c);",
+  1:"linear-gradient(45deg, #310e91, #8869dd);",
+  2:"linear-gradient(to right, #2c3e50, #4ca1af);", 
+  3:"linear-gradient(to top, #e96443, #904e95);",
+  4:"linear-gradient(to left, #3a7bd5, #3a6073);",
+  5:"linear-gradient(to left, #00d2ff, #928dab);",
+  6:"linear-gradient(to bottom, #2196f3, #f44336);",
+  7:"linear-gradient(to bottom, #ff5f6d, #ffc371);",
+  8:"linear-gradient(to top, #16bffd, #cb3066);",
+  9:"linear-gradient(to top, #eecda3, #ef629f);",
+  10:"linear-gradient(to top, #000000, #434343);",
+  11:"linear-gradient(to top, #4b79a1, #283e51);",
+  12:"linear-gradient(to top, #1e3c72, #2a5298);",
+  13:"linear-gradient(to bottom, #6a3093, #a044ff); ",
+  14:"linear-gradient(to bottom, #7b4397, #dc2430);"
+}

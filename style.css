@@ -519,3 +519,30 @@ padding: 10px;
 .hide-for-print{
     display: none;
 }
+
+.sug-card{
+    padding: 10px;
+    margin: 15px 5px;
+    background: linear-gradient(45deg, #310e91, #8869dd);
+    color: #faf0f0;
+    text-align: center;
+    font-family: 'Lato', kalpurush;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.sug-card .title-1{
+    /* float: left; */
+    position: absolute;
+    left: 2%;
+    font-size: 14px;
+    font-weight: bold;
+    top: 2%;
+}
+
+.title-word{
+    margin-top: 5px;
+    font-size: 25px;
+    font-weight: 900;
+}
