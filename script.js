@@ -280,12 +280,73 @@ router.on({
         </div>`;
         const dic_body = document.querySelector('.dic_body');
         let s_word = params.id;
-       
+        $(function(){
+          $.get('https://api.codetabs.com/v1/proxy?quest=https://www.english-bangla.com/bntoen/index/'+s_word, ()=>{})
+          .done(res=>{
+            $('#tt').text('সার্চ');
+            $('#prg').hide();
+              let ht = res.split('\n');
+              let w ='';
+              for(let i=0;i<ht.length; i++){
+                if(ht[i].includes('description')){
+                  w = ht[i];
+                  break;
+                }
+              }
+              console.log(w);
+              w = w.split('-');
+              w = w[1].split('Bangla');
+              pos = '';
+            if(w[0].includes('[')){
+              pos = w[0].split(']');
+              pos = pos[0].split('[');
+              pos = pos[1];
+              w = w[0].split(']');
+              w = w[1].split(';');
+              w = w.join("");
+              w = w.split(".");
+              w = w[0].split(" ");
+            }else{
+              w = w[0].split(';');
+              w = w.join("");
+              w = w.split(".");
+              w = w[0].split(" ");
+            }
+           
+             console.log(w);
+              // if(w[0].includes(';')){
+              // w = w[0].split(';');
+              // }
+              // if(w[0].includes(',')){
+              //   w = w[0].split(',');
+              //   }
+             // console.log(w[0]);
+             dic_body.innerHTML = `
+          <div class="word_head"> <span id="not_found"></span> ${s_word} <div style="display: none;" class="add_fav"><i class="icofont-favourite"></i></div></div></div>
+          <div class="word_prnc"></div>
+          <div class="def_body">
+                        <div class="pos">${pos}</div>
+                        <div class="def bnen"></div>
+                        </div>
+          `
+          const bnen = document.querySelector('.bnen');
+          bnen.innerHTML='';
+          for(let i=0; i<w.length; i++){
+           if(w[i]!=''){
+              bnen.innerHTML+=`
+             <a href="#!/search/${w[i].toLowerCase()}">${w[i].toLowerCase()}</a>
+              `
+              if(w.length-1!=i) bnen.innerHTML+=',';
+            }
+            
+          }
+          })
+        });
+        /*
         $(function(){
         $.get('https://api.allorigins.win/get?url=https://www.edictionarybd.com/dictionary/b2e/'+s_word[0]+'/'+s_word+'.php', ()=>{})
         .done(res=>{
-          $('#tt').text('সার্চ');
-          $('#prg').hide();
+         
           let body = res.contents.split('/');
           //console.log(body);
           let m = '';
@@ -306,25 +367,7 @@ router.on({
           m = m[0].split(" ");
          
 
-          dic_body.innerHTML = `
-          <div class="word_head"> <span id="not_found"></span> ${s_word} <div style="display: none;" class="add_fav"><i class="icofont-favourite"></i></div></div></div>
-          <div class="word_prnc"></div>
-          <div class="def_body">
-                        <div class="pos">${pos}</div>
-                        <div class="def bnen"></div>
-                        </div>
-          `
-          const bnen = document.querySelector('.bnen');
-          bnen.innerHTML='';
-          for(let i=0; i<m.length; i++){
-           if(m[i]!=''){
-              bnen.innerHTML+=`
-             <a href="#!/search/${m[i].toLowerCase()}">${m[i].toLowerCase()}</a>
-              `
-              if(m.length-1!=i) bnen.innerHTML+=',';
-            }
-            
-          }
+         
         }).fail(e=>{
           Swal.fire({
             icon: 'error',
@@ -336,7 +379,7 @@ router.on({
                 router.navigate('/');
             });
         })
-      });
+      });*/
 
 
 
