@@ -42,7 +42,7 @@ router.on(function(){
       $('.rem').html(`
       <div style="background:${gradientColorCode[randomBackground]};" class="sug-card animate__animated animate__fadeIn">
       <div class="title-1"><i class="icofont-brainstorming"></i> Remember</div>
-      <div class="title-word animate__animated animate__jello">${word}<span style="font-size: 15px" id="bn">(...)</span></div>
+      <div class="title-word animate__animated animate__jello">${word}<div style="font-size: 15px" id="bn">(...)</div></div>
       <div class="title-meaning"><center> <div class="preloader-wrapper small active">
       <div class="spinner-layer spinner-green-only">
         <div class="circle-clipper left">
