@@ -89,7 +89,7 @@ router.on(function(){
             // if(w[0].includes(',')){
             //   w = w[0].split(',');
             //   }
-            console.log(w[0]);
+           // console.log(w[0]);
             $('#bn').text('('+w[0]+')');
         })
       });
@@ -424,6 +424,7 @@ router.on({
               //console.log(b[1]);
               b = b[1].split('/');
               b = b.join('~');
+              if(a[1].includes('Pori Moni')) continue;
               if(a[1].length>0){
                let c = a[1].replace('%', '~');
               nw.innerHTML +=`
