@@ -42,7 +42,7 @@ router.on(function(){
       $('.rem').html(`
       <div style="background:${gradientColorCode[randomBackground]};" class="sug-card animate__animated animate__fadeIn">
       <div class="title-1"><i class="icofont-brainstorming"></i> Remember</div>
-      <div class="title-word animate__animated animate__jello">${word}<div style="font-size: 15px" id="bn">(...)</div></div>
+      <div class="title-word animate__animated animate__fadeIn">${word}<div style="font-size: 15px" id="bn">(...)</div></div>
       <div class="title-meaning"><center> <div class="preloader-wrapper small active">
       <div class="spinner-layer spinner-green-only">
         <div class="circle-clipper left">
@@ -302,25 +302,23 @@ router.on({
               pos = pos[0].split('[');
               pos = pos[1];
               w = w[0].split(']');
+              if(w[1].includes("[")){
+                w[1] = w[1].split("[")[0]; 
+              }
               w = w[1].split(';');
               w = w.join("");
               w = w.split(".");
               w = w[0].split(" ");
             }else{
+              if(w[0].includes("[")){
+                w[0] = w[0].split("[")[0]; 
+              }
               w = w[0].split(';');
               w = w.join("");
               w = w.split(".");
               w = w[0].split(" ");
             }
-           
              console.log(w);
-              // if(w[0].includes(';')){
-              // w = w[0].split(';');
-              // }
-              // if(w[0].includes(',')){
-              //   w = w[0].split(',');
-              //   }
-             // console.log(w[0]);
              dic_body.innerHTML = `
           <div class="word_head"> <span id="not_found"></span> ${s_word} <div style="display: none;" class="add_fav"><i class="icofont-favourite"></i></div></div></div>
           <div class="word_prnc"></div>
@@ -338,7 +336,6 @@ router.on({
               `
               if(w.length-1!=i) bnen.innerHTML+=',';
             }
-            
           }
           })
         });
